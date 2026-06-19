@@ -5,10 +5,33 @@ __pycache__/
 
 # Raw dataset files are excluded because they can be large
 data/raw/
+# More specific raw file patterns (prevent accidental commits of large files)
+data/raw/*.csv
+data/raw/*.csv.gz
+data/raw/*.gz
+data/raw/*.geojson
 
 # Generated processed data and database can be recreated by running the pipeline
 data/processed/
 data/database/
+
+# Database and local DB files
+*.duckdb
+*.db
+*.sqlite3
+
+# Environment files
+.env
+.env.*
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+temp/
+
+# JetBrains IDE
+.idea/
 
 # Keep report outputs for reviewer evidence
 !reports/
