@@ -42,78 +42,79 @@ def get_first_row(df):
     return df.iloc[0].to_dict()
 
 
-def build_room_type_insight():
+def build_room_type_supply_insight():
     df = read_csv_if_exists(SQL_OUTPUTS_DIR / "query_01_output.csv")
     top_row = get_first_row(df)
 
     if top_row is None:
-        return "Room type pricing results were not available."
+        return "Room type supply results were not available."
 
     room_type = top_row.get("room_type", "not available")
-    median_price = format_number(top_row.get("median_price"))
-    average_price = format_number(top_row.get("average_price"))
     listing_count = format_number(top_row.get("listing_count"), 0)
+    average_availability = format_number(top_row.get("average_availability_365"))
+    average_reviews = format_number(top_row.get("average_number_of_reviews"))
 
     return (
-        f"The highest median price room type was **{room_type}**, "
-        f"with a median price of **{median_price}** and an average price of "
-        f"**{average_price}** across **{listing_count}** listings. "
-        "This supports the view that room type is a major pricing driver and "
-        "should be used as a core benchmark category."
+        f"The largest room type category was **{room_type}**, with **{listing_count}** listings. "
+        f"This category had an average annual availability of **{average_availability}** days "
+        f"and an average of **{average_reviews}** reviews per listing. This indicates that the "
+        "Melbourne Airbnb market is strongly shaped by entire-home/apartment supply rather than "
+        "shared accommodation."
     )
 
 
-def build_neighbourhood_price_insight():
+def build_neighbourhood_supply_insight():
     df = read_csv_if_exists(SQL_OUTPUTS_DIR / "query_02_output.csv")
     top_row = get_first_row(df)
 
     if top_row is None:
-        return "Neighbourhood price results were not available."
+        return "Neighbourhood supply results were not available."
 
     neighbourhood = top_row.get("neighbourhood_cleansed", "not available")
-    median_price = format_number(top_row.get("median_price"))
     listing_count = format_number(top_row.get("listing_count"), 0)
+    average_availability = format_number(top_row.get("average_availability_365"))
+    average_reviews = format_number(top_row.get("average_number_of_reviews"))
 
     return (
-        f"The neighbourhood with the highest median price among neighbourhoods "
-        f"with sufficient listing volume was **{neighbourhood}**, with a median "
-        f"price of **{median_price}** across **{listing_count}** listings. "
-        "This indicates that location has a strong relationship with pricing, "
-        "and city-wide averages may hide important local market differences."
+        f"The neighbourhood with the highest listing count was **{neighbourhood}**, "
+        f"with **{listing_count}** listings. Its average annual availability was "
+        f"**{average_availability}** days and the average number of reviews was "
+        f"**{average_reviews}**. This suggests that neighbourhood-level supply concentration "
+        "is important for market monitoring and operational planning."
     )
 
 
-def build_revenue_insight():
+def build_occupancy_insight():
     df = read_csv_if_exists(SQL_OUTPUTS_DIR / "query_03_output.csv")
     top_row = get_first_row(df)
 
     if top_row is None:
-        return "Estimated revenue results were not available."
+        return "Estimated occupancy results were not available."
 
     neighbourhood = top_row.get("neighbourhood_cleansed", "not available")
-    revenue = format_number(top_row.get("total_estimated_revenue"))
-    occupancy = format_number(top_row.get("average_occupancy_rate"), 4)
+    listing_count = format_number(top_row.get("listing_count"), 0)
+    occupancy = format_number(top_row.get("average_occupancy_rate_estimate"), 4)
+    availability = format_number(top_row.get("average_availability_365"))
 
     return (
-        f"The neighbourhood with the highest estimated annual revenue contribution "
-        f"was **{neighbourhood}**, with estimated annual revenue of **{revenue}** "
-        f"and an average occupancy-rate proxy of **{occupancy}**. "
-        "This should be interpreted as a directional market signal because calendar "
-        "unavailable days may include bookings, blocked dates, or host-disabled dates."
+        f"The neighbourhood with the highest estimated occupancy-rate proxy was "
+        f"**{neighbourhood}**, based on **{listing_count}** listings. Its average "
+        f"occupancy-rate estimate was **{occupancy}**, while average annual availability "
+        f"was **{availability}** days. This should be treated as a proxy because calendar "
+        "unavailability may represent bookings, blocked dates, or host-disabled dates."
     )
 
 
-def build_weekend_price_insight():
+def build_weekend_availability_insight():
     df = read_csv_if_exists(SQL_OUTPUTS_DIR / "query_05_output.csv")
 
     if df.empty or "is_weekend" not in df.columns:
-        return "Weekend and weekday pricing results were not available."
+        return "Weekend and weekday availability results were not available."
 
     return (
-        "Weekend and weekday calendar pricing was analysed to identify whether "
-        "hosts use day-of-week pricing strategies. The output is available in "
-        "`reports/sql_outputs/query_05_output.csv` and should be interpreted "
-        "alongside the statistical test results."
+        "Weekend and weekday availability was analysed using calendar availability records. "
+        "The output is available in `reports/sql_outputs/query_05_output.csv`. This helps "
+        "identify whether listings are more or less available on weekends compared with weekdays."
     )
 
 
@@ -126,13 +127,15 @@ def build_host_concentration_insight():
 
     host_name = top_row.get("host_name", "not available")
     listing_count = format_number(top_row.get("listing_count"), 0)
-    revenue = format_number(top_row.get("total_estimated_revenue"))
+    average_availability = format_number(top_row.get("average_availability_365"))
+    average_reviews = format_number(top_row.get("average_number_of_reviews"))
 
     return (
         f"The largest host by listing count was **{host_name}**, managing "
-        f"**{listing_count}** listings in the analysed dataset. The same host had "
-        f"estimated annual revenue of **{revenue}**. This suggests that host "
-        "concentration is an important supply-side feature to monitor."
+        f"**{listing_count}** listings. This host had average annual availability of "
+        f"**{average_availability}** days and average reviews per listing of "
+        f"**{average_reviews}**. This suggests that host concentration is an important "
+        "supply-side feature to monitor."
     )
 
 
@@ -155,13 +158,11 @@ def build_statistical_summary():
         if status == "Completed":
             line = (
                 f"- **{hypothesis}** was completed using the **{test_used}**. "
-                f"The p-value was **{format_number(p_value, 6)}** and the effect "
-                f"size was **{format_number(effect_size, 4)}**. {interpretation}"
+                f"The p-value was **{format_number(p_value, 6)}** and the effect size "
+                f"was **{format_number(effect_size, 4)}**. {interpretation}"
             )
         else:
-            line = (
-                f"- **{hypothesis}** was skipped. Reason: {interpretation}"
-            )
+            line = f"- **{hypothesis}** was skipped. Reason: {interpretation}"
 
         lines.append(line)
 
@@ -173,21 +174,25 @@ def build_markdown_report():
 
 This file summarises the actual generated project outputs and can be used to update `reports/final_report.md`.
 
-## Room Type Pricing
+## Dataset Limitation: Price Fields
 
-{build_room_type_insight()}
+The Melbourne Inside Airbnb files used in this project did not contain usable price values. The `price` field in the detailed listings file, the summary listings file, and the calendar file contained no non-null values. For this reason, the final analysis focuses on supply, availability, host concentration, review behaviour, neighbourhood patterns, and quality signals rather than price or revenue.
 
-## Neighbourhood Pricing
+## Room Type Supply
 
-{build_neighbourhood_price_insight()}
+{build_room_type_supply_insight()}
 
-## Estimated Revenue
+## Neighbourhood Supply
 
-{build_revenue_insight()}
+{build_neighbourhood_supply_insight()}
 
-## Weekend vs Weekday Pricing
+## Estimated Occupancy Proxy
 
-{build_weekend_price_insight()}
+{build_occupancy_insight()}
+
+## Weekend vs Weekday Availability
+
+{build_weekend_availability_insight()}
 
 ## Host Concentration
 
