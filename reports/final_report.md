@@ -1,5 +1,27 @@
 # Airbnb Melbourne Data Engineering and Market Analysis Report
 
+## Table of Contents
+
+1. Executive Summary  
+2. Objectives and Scope  
+3. Dataset Overview  
+4. Methodology  
+5. Engineering Approach  
+6. Data Quality Findings  
+7. SQL Analysis Findings  
+8. Exploratory Data Analysis Findings  
+9. Statistical Findings  
+10. Business Recommendations  
+11. Assumptions and Decision Log  
+12. Limitations and Caveats  
+13. Future Improvements  
+14. Reflection  
+Appendix A. AI Usage Disclosure  
+Appendix B. Figure Gallery  
+Appendix C. SQL Output Tables  
+Appendix D. EDA Output Tables  
+Appendix E. Statistical Output Tables  
+
 ## 1. Executive Summary
 
 This project analyses the Melbourne, Victoria, Australia Airbnb market using public data from Inside Airbnb.
