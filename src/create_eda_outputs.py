@@ -40,7 +40,7 @@ def load_data():
     listing_master = pd.read_csv(PROCESSED_DIR / "listing_master.csv", low_memory=False)
     calendar = pd.read_csv(PROCESSED_DIR / "clean_calendar.csv", low_memory=False)
 
-    listing_master["price_clean"] = to_numeric(listing_master["price_clean"])
+    listing_master["analysis_price"] = to_numeric(listing_master["analysis_price"])
 
     if "review_scores_rating" in listing_master.columns:
         listing_master["review_scores_rating"] = to_numeric(
@@ -52,7 +52,7 @@ def load_data():
             listing_master["number_of_reviews"]
         )
 
-    if "price_clean" in calendar.columns:
+    if "analysis_price" in calendar.columns:
         calendar["price_clean"] = to_numeric(calendar["price_clean"])
 
     if "available_bool" in calendar.columns:
@@ -75,7 +75,7 @@ def load_data():
 
 
 def create_price_distribution(listing_master):
-    price_data = listing_master["price_clean"].dropna()
+    price_data = listing_master["analysis_price"].dropna()
     price_data = price_data[price_data > 0]
     price_data = price_data[price_data <= price_data.quantile(0.99)]
 
@@ -90,12 +90,12 @@ def create_price_distribution(listing_master):
 def create_price_by_room_type(listing_master):
     summary = (
         listing_master
-        .dropna(subset=["room_type", "price_clean"])
+        .dropna(subset=["room_type", "analysis_price"])
         .groupby("room_type")
         .agg(
             listing_count=("id", "count"),
-            median_price=("price_clean", "median"),
-            average_price=("price_clean", "mean"),
+            median_price=("analysis_price", "median"),
+            average_price=("analysis_price", "mean"),
         )
         .reset_index()
         .sort_values("median_price", ascending=False)
@@ -115,12 +115,12 @@ def create_price_by_room_type(listing_master):
 def create_top_neighbourhood_prices(listing_master):
     summary = (
         listing_master
-        .dropna(subset=["neighbourhood_cleansed", "price_clean"])
+        .dropna(subset=["neighbourhood_cleansed", "analysis_price"])
         .groupby("neighbourhood_cleansed")
         .agg(
             listing_count=("id", "count"),
-            median_price=("price_clean", "median"),
-            average_price=("price_clean", "mean"),
+            median_price=("analysis_price", "median"),
+            average_price=("analysis_price", "mean"),
         )
         .reset_index()
     )
@@ -195,7 +195,7 @@ def create_host_concentration_table(listing_master):
         .groupby(["host_id", "host_name"], dropna=False)
         .agg(
             listing_count=("id", "count"),
-            average_price=("price_clean", "mean"),
+            average_price=("analysis_price", "mean"),
             total_estimated_revenue=("estimated_annual_revenue", "sum"),
         )
         .reset_index()
@@ -207,21 +207,21 @@ def create_host_concentration_table(listing_master):
 
 
 def create_price_vs_reviews(listing_master):
-    required_columns = {"price_clean", "number_of_reviews"}
+    required_columns = {"analysis_price", "number_of_reviews"}
 
     if not required_columns.issubset(listing_master.columns):
         logging.warning("Required columns for price vs reviews chart not found")
         return
 
-    chart_data = listing_master.dropna(subset=["price_clean", "number_of_reviews"])
-    chart_data = chart_data[chart_data["price_clean"] > 0]
-    chart_data = chart_data[chart_data["price_clean"] <= chart_data["price_clean"].quantile(0.99)]
+    chart_data = listing_master.dropna(subset=["analysis_price", "number_of_reviews"])
+    chart_data = chart_data[chart_data["analysis_price"] > 0]
+    chart_data = chart_data[chart_data["analysis_price"] <= chart_data["analysis_price"].quantile(0.99)]
 
     if len(chart_data) > 5000:
         chart_data = chart_data.sample(5000, random_state=42)
 
     plt.figure(figsize=(10, 6))
-    plt.scatter(chart_data["number_of_reviews"], chart_data["price_clean"], alpha=0.4)
+    plt.scatter(chart_data["number_of_reviews"], chart_data["analysis_price"], alpha=0.4)
     plt.title("Price vs Number of Reviews")
     plt.xlabel("Number of Reviews")
     plt.ylabel("Price")

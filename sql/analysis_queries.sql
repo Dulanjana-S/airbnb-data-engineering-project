@@ -2,10 +2,10 @@
 SELECT
     room_type,
     COUNT(*) AS listing_count,
-    ROUND(AVG(TRY_CAST(price_clean AS DOUBLE)), 2) AS average_price,
-    ROUND(MEDIAN(TRY_CAST(price_clean AS DOUBLE)), 2) AS median_price
+    ROUND(AVG(TRY_CAST(analysis_price AS DOUBLE)), 2) AS average_price,
+    ROUND(MEDIAN(TRY_CAST(analysis_price AS DOUBLE)), 2) AS median_price
 FROM fact_listing
-WHERE TRY_CAST(price_clean AS DOUBLE) IS NOT NULL
+WHERE TRY_CAST(analysis_price AS DOUBLE) IS NOT NULL
 GROUP BY room_type
 ORDER BY median_price DESC;
 
@@ -14,10 +14,10 @@ ORDER BY median_price DESC;
 SELECT
     neighbourhood_cleansed,
     COUNT(*) AS listing_count,
-    ROUND(MEDIAN(TRY_CAST(price_clean AS DOUBLE)), 2) AS median_price,
-    ROUND(AVG(TRY_CAST(price_clean AS DOUBLE)), 2) AS average_price
+    ROUND(MEDIAN(TRY_CAST(analysis_price AS DOUBLE)), 2) AS median_price,
+    ROUND(AVG(TRY_CAST(analysis_price AS DOUBLE)), 2) AS average_price
 FROM fact_listing
-WHERE TRY_CAST(price_clean AS DOUBLE) IS NOT NULL
+WHERE TRY_CAST(analysis_price AS DOUBLE) IS NOT NULL
 GROUP BY neighbourhood_cleansed
 HAVING COUNT(*) >= 10
 ORDER BY median_price DESC
@@ -55,12 +55,12 @@ ORDER BY average_review_score DESC;
 SELECT
     dd.is_weekend,
     COUNT(*) AS calendar_records,
-    ROUND(AVG(TRY_CAST(fcd.price_clean AS DOUBLE)), 2) AS average_price,
-    ROUND(MEDIAN(TRY_CAST(fcd.price_clean AS DOUBLE)), 2) AS median_price
+    ROUND(AVG(TRY_CAST(fcd.analysis_price AS DOUBLE)), 2) AS average_price,
+    ROUND(MEDIAN(TRY_CAST(fcd.analysis_price AS DOUBLE)), 2) AS median_price
 FROM fact_calendar_daily fcd
 LEFT JOIN dim_date dd
     ON fcd.date = dd.date
-WHERE TRY_CAST(fcd.price_clean AS DOUBLE) IS NOT NULL
+WHERE TRY_CAST(fcd.analysis_price AS DOUBLE) IS NOT NULL
 GROUP BY dd.is_weekend
 ORDER BY dd.is_weekend DESC;
 
@@ -70,7 +70,7 @@ SELECT
     dh.host_id,
     dh.host_name,
     COUNT(fl.listing_id) AS listing_count,
-    ROUND(AVG(TRY_CAST(fl.price_clean AS DOUBLE)), 2) AS average_price,
+    ROUND(AVG(TRY_CAST(fl.analysis_price AS DOUBLE)), 2) AS average_price,
     ROUND(SUM(TRY_CAST(fl.estimated_annual_revenue AS DOUBLE)), 2) AS total_estimated_revenue
 FROM fact_listing fl
 LEFT JOIN dim_host dh
@@ -84,10 +84,10 @@ LIMIT 10;
 SELECT
     room_type,
     COUNT(*) AS listing_count,
-    ROUND(AVG(TRY_CAST(price_clean AS DOUBLE)), 2) AS average_price,
+    ROUND(AVG(TRY_CAST(analysis_price AS DOUBLE)), 2) AS average_price,
     ROUND(AVG(TRY_CAST(number_of_reviews AS DOUBLE)), 2) AS average_number_of_reviews,
     ROUND(AVG(TRY_CAST(review_scores_rating AS DOUBLE)), 2) AS average_review_score
 FROM fact_listing
-WHERE TRY_CAST(price_clean AS DOUBLE) IS NOT NULL
+WHERE TRY_CAST(analysis_price AS DOUBLE) IS NOT NULL
 GROUP BY room_type
 ORDER BY average_price DESC;

@@ -67,7 +67,7 @@ def mann_whitney_test(group_a, group_b):
 def test_entire_home_vs_private_room(listing_master):
     hypothesis = "H1: Entire-home listings have different prices than private rooms"
 
-    required_columns = {"room_type", "price_clean"}
+    required_columns = {"room_type", "analysis_price"}
     if not required_columns.issubset(listing_master.columns):
         return create_skipped_result(
             hypothesis,
@@ -78,12 +78,12 @@ def test_entire_home_vs_private_room(listing_master):
 
     entire_home = listing_master.loc[
         room_type_normalised.str.contains("entire home", na=False),
-        "price_clean",
+        "analysis_price",
     ]
 
     private_room = listing_master.loc[
         room_type_normalised.str.contains("private room", na=False),
-        "price_clean",
+        "analysis_price",
     ]
 
     result = mann_whitney_test(entire_home, private_room)
@@ -161,7 +161,7 @@ def test_superhost_vs_non_superhost(listing_master):
 def test_neighbourhood_price_differences(listing_master):
     hypothesis = "H3: Listing prices differ across neighbourhoods"
 
-    required_columns = {"neighbourhood_cleansed", "price_clean"}
+    required_columns = {"neighbourhood_cleansed", "analysis_price"}
     if not required_columns.issubset(listing_master.columns):
         return create_skipped_result(
             hypothesis,
@@ -169,7 +169,7 @@ def test_neighbourhood_price_differences(listing_master):
         )
 
     filtered_data = listing_master.dropna(
-        subset=["neighbourhood_cleansed", "price_clean"]
+        subset=["neighbourhood_cleansed", "analysis_price"]
     ).copy()
 
     filtered_data = filtered_data[
@@ -184,7 +184,7 @@ def test_neighbourhood_price_differences(listing_master):
     for _, group in filtered_data[
         filtered_data["neighbourhood_cleansed"].isin(eligible_neighbourhoods)
     ].groupby("neighbourhood_cleansed"):
-        prices = group["price_clean"].dropna()
+        prices = group["analysis_price"].dropna()
         if len(prices) >= 10:
             neighbourhood_groups.append(prices)
 
@@ -218,7 +218,7 @@ def test_neighbourhood_price_differences(listing_master):
 def test_weekend_vs_weekday_prices(calendar):
     hypothesis = "H4: Weekend calendar prices differ from weekday prices"
 
-    required_columns = {"is_weekend", "price_clean"}
+    required_columns = {"is_weekend", "analysis_price"}
     if not required_columns.issubset(calendar.columns):
         return create_skipped_result(
             hypothesis,
@@ -229,12 +229,12 @@ def test_weekend_vs_weekday_prices(calendar):
 
     weekend_prices = calendar.loc[
         weekend_flag.isin(["true", "1", "yes"]),
-        "price_clean",
+        "analysis_price",
     ]
 
     weekday_prices = calendar.loc[
         weekend_flag.isin(["false", "0", "no"]),
-        "price_clean",
+        "analysis_price",
     ]
 
     result = mann_whitney_test(weekend_prices, weekday_prices)
@@ -274,15 +274,15 @@ def main():
     listing_master = pd.read_csv(PROCESSED_DIR / "listing_master.csv", low_memory=False)
     calendar = pd.read_csv(PROCESSED_DIR / "clean_calendar.csv", low_memory=False)
 
-    if "price_clean" in listing_master.columns:
-        listing_master["price_clean"] = to_numeric(listing_master["price_clean"])
+    if "analysis_price" in listing_master.columns:
+        listing_master["analysis_price"] = to_numeric(listing_master["analysis_price"])
 
     if "review_scores_rating" in listing_master.columns:
         listing_master["review_scores_rating"] = to_numeric(
             listing_master["review_scores_rating"]
         )
 
-    if "price_clean" in calendar.columns:
+    if "analysis_price" in calendar.columns:
         calendar["price_clean"] = to_numeric(calendar["price_clean"])
 
     results = [

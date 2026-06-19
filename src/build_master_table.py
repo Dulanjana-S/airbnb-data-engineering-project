@@ -138,9 +138,9 @@ def add_neighbourhood_metrics(master):
         "listing_count_neighbourhood": ("id", "count"),
     }
 
-    if "price_clean" in master.columns:
-        aggregation_rules["median_price_neighbourhood"] = ("price_clean", "median")
-        aggregation_rules["average_price_neighbourhood"] = ("price_clean", "mean")
+    if "analysis_price" in master.columns:
+        aggregation_rules["median_price_neighbourhood"] = ("analysis_price", "median")
+        aggregation_rules["average_price_neighbourhood"] = ("analysis_price", "mean")
 
     if "review_scores_rating" in master.columns:
         aggregation_rules["average_rating_neighbourhood"] = ("review_scores_rating", "mean")
@@ -185,7 +185,26 @@ def build_listing_master():
         how="left",
         suffixes=("", "_reviews"),
     )
+    listing_master["price_clean"] = pd.to_numeric(
+        listing_master.get("price_clean"),
+        errors="coerce",
+    )
 
+    listing_master["median_calendar_price"] = pd.to_numeric(
+        listing_master.get("median_calendar_price"),
+        errors="coerce",
+    )
+
+    listing_master["average_calendar_price"] = pd.to_numeric(
+        listing_master.get("average_calendar_price"),
+        errors="coerce",
+    )
+
+    listing_master["analysis_price"] = (
+        listing_master["price_clean"]
+        .combine_first(listing_master["median_calendar_price"])
+        .combine_first(listing_master["average_calendar_price"])
+    )
     listing_master = add_neighbourhood_metrics(listing_master)
 
     listing_master.drop(
