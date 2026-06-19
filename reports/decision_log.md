@@ -137,6 +137,13 @@ Decision:
 
 Report outputs such as CSV summaries and figures are included.
 
+Decision: Pivot away from price analysis
+
+During profiling, the Melbourne listings and calendar files were found to contain no usable price values. Instead of imputing or inventing prices, the project scope was adjusted to focus on supply, availability, review behaviour, host concentration, neighbourhood patterns, and quality signals.
+
+Trade-off:
+This reduced the ability to analyse pricing and revenue, but improved the trustworthiness of the final analysis.
+
 Rationale:
 
 This allows reviewers to inspect outputs quickly without rerunning the full pipeline first.
