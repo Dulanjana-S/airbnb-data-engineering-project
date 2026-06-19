@@ -1,0 +1,5 @@
+hypothesis,test_used,status,null_hypothesis,alternative_hypothesis,sample_size_group_1,sample_size_group_2,test_statistic,p_value,effect_size,business_interpretation
+H1: Entire-home listings have different prices than private rooms,Not run,Skipped,,,0,0,,,,The test was skipped because one or both room-type groups had fewer than two valid price records.
+H2: Superhost listings have different review scores than non-superhost listings,Mann-Whitney U test,Completed,There is no review score distribution difference between superhost and non-superhost listings.,There is a review score distribution difference between superhost and non-superhost listings.,6781,12735,54361346.0,0.0,0.259,"Superhost status is tested as a quality signal. If significant, it may indicate stronger guest satisfaction among superhost listings."
+H3: Listing prices differ across neighbourhoods,Not run,Skipped,,,0,0,,,,The test was skipped because fewer than two neighbourhoods had enough valid price records.
+H4: Weekend calendar prices differ from weekday prices,Not run,Skipped,,,0,0,,,,The test was skipped because weekend or weekday records had insufficient valid price values.
