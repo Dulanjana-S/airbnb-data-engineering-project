@@ -19,6 +19,7 @@ The dataset is sourced from Inside Airbnb.
 Files used:
 
 * listings.csv.gz
+* listings.csv
 * calendar.csv.gz
 * reviews.csv.gz
 * neighbourhoods.csv
@@ -177,8 +178,8 @@ The design follows a simple analytical star-schema style, where listing, calenda
 ## Important Assumptions
 
 * Calendar unavailable days are treated as an occupancy proxy.
-* Estimated annual revenue is calculated using unavailable calendar days multiplied by average calendar price.
-* This revenue estimate is approximate because unavailable days may include booked dates, blocked dates, or host-disabled dates.
+* The Melbourne dataset did not contain usable price values, so price and       revenue analysis were excluded. The project focuses on supply, availability
+reviews, host concentration, neighbourhood patterns, and quality signals.
 * Statistical tests are interpreted as evidence of association, not proof of causation.
 * Some statistical tests may be skipped if there is insufficient valid data after cleaning.
 
