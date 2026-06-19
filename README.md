@@ -25,7 +25,7 @@ Files used:
 * neighbourhoods.csv
 * neighbourhoods.geojson
 
-Raw dataset files are not committed to this repository because they can be large. They should be downloaded from Inside Airbnb and placed in `data/raw/`.
+Raw dataset files are committed to this repository  `data/raw/`.
 
 ## Project Structure
 
