@@ -1,0 +1,96 @@
+dataset,filename,row_count,column_count,column_name,data_type,null_count,null_percentage,unique_count,sample_values
+listings,listings.csv.gz,24491,79,id,int64,0,0.0,24491,10803 | 12936 | 41836
+listings,listings.csv.gz,24491,79,listing_url,str,0,0.0,24491,https://www.airbnb.com/rooms/10803 | https://www.airbnb.com/rooms/12936 | https://www.airbnb.com/rooms/41836
+listings,listings.csv.gz,24491,79,scrape_id,int64,0,0.0,1,20250912034451 | 20250912034451 | 20250912034451
+listings,listings.csv.gz,24491,79,last_scraped,str,0,0.0,1,2025-09-12 | 2025-09-12 | 2025-09-12
+listings,listings.csv.gz,24491,79,source,str,0,0.0,1,previous scrape | previous scrape | previous scrape
+listings,listings.csv.gz,24491,79,name,str,0,0.0,23884,"Room in Deco Apartment, Brunswick East | St Kilda 1BR+BEACHSIDE+BALCONY+WIFI+AC | CLOSE TO CITY & MELBOURNE AIRPORT"
+listings,listings.csv.gz,24491,79,description,str,509,2.08,21506,"A large air conditioned room with firm queen spring mattress bed in a vintage apartment. Located right outside is a tram to the city just 20 minutes away. This area is known for its arts culture, live music, cafes and international food. | RIGHT IN THE HEART OF ST KILDA! It doesn't get more central than this! A fabulous north facing balcony apartment that offers right in the heart of the action location, yet a quiet spot with balcony views and only minutes to cafes, restaurants, shopping, grocery stores, supermarkets, St Kilda Beach, Albert Park Lake, home of the Grand Prix and trams into Melbourne City Centre right on your doorstep. The perfect base for your Melbourne adventure! | Easy to travel from and to the Airport; quiet and safe neighbourhood; a spacious and sunny room; backyard for sun baking; a friendly host who are easy going and super friendly!<br />I would like to make your journey more comfortable!"
+listings,listings.csv.gz,24491,79,neighborhood_overview,str,13031,53.21,9367,"This hip area is a crossroads between two great cultural strips of inner Northern Melbourne. <br />Located in East Brunswick, between High St, Northcote and Lygon St Brunswick you have the choice of some of Melbourne's best budget dining and cool bars. Restaurants range from cheap eateries to quality Lebanese and Turkish with Indian, Greek, Italian and Thai places. Around the corner Ceres Environmental Centre is set on reclaimed parkland next to Merri creek and it's convenient bike paths. Ceres has a daily organic foods market and two cafes with outdoor and indoor dining. They also have a bike shed where you can buy a second hand bike cheap - or take your own to work on. There are three coffee places within 50metres, and the Lomond Hotel Pub right across the road has good live music. | A stay at our apartment means you can enjoy some of Melbourne’s best restaurants, bars, cafes, shopping, dining and night life, all at your doorstep.<br />St Kilda beach, Luna Park and the Esplanade Sunday Market are also close by.<br />Spoil yourself at the St Kilda Sea Baths spa during your stay. A 10 minute walk takes you to Albert Park Lake, home of the Melbourne Grand Prix. Here you will find restaurants and cafes that overlook the lake with the city skyline as a stunning backdrop. Our apartment is perfectly suited to those wanting an exclusive, authentic urban residential experience. | The neighbours are quiet and friendly,  please don't park the car on my driveway because one of our neighbours is doing shifting work as a nurse. There are plenty of space for parking in the guest parking bay and along the street for free."
+listings,listings.csv.gz,24491,79,picture_url,str,1,0.0,23998,https://a0.muscache.com/pictures/e5f30dd1-ac57-4699-bf9d-f799f32b2a19.jpg | https://a0.muscache.com/pictures/59701/2e8cdaf3_original.jpg | https://a0.muscache.com/pictures/569696dd-1ad0-4646-bd87-30aa4cc4d2c0.jpg
+listings,listings.csv.gz,24491,79,host_id,int64,0,0.0,13860,38901 | 50121 | 182833
+listings,listings.csv.gz,24491,79,host_url,str,0,0.0,13860,https://www.airbnb.com/users/show/38901 | https://www.airbnb.com/users/show/50121 | https://www.airbnb.com/users/show/182833
+listings,listings.csv.gz,24491,79,host_name,str,6,0.02,5919,Lindsay | The A2C Team | Diana
+listings,listings.csv.gz,24491,79,host_since,str,6,0.02,4479,2009-09-16 | 2009-10-31 | 2010-07-27
+listings,listings.csv.gz,24491,79,host_location,str,6294,25.7,979,"Melbourne, Australia | Melbourne, Australia | Venus Bay, Australia"
+listings,listings.csv.gz,24491,79,host_about,str,10922,44.6,6467,"As an artist working in animation and video I am involved in many community related projects. I manage a Yoga studio at this address, downstairs from the flat. I really enjoy Yoga, good food, good company and getting out into the sunshine whenever I can. Melbourne is a great city of arts and music - there's always something on and my flat is in a great location between Brunswick and Northcote, two suburbs with many arts warehouses and venues. Please be aware that the apartment is old and has a funky vibe and it is not for people who need  modern hotel style accommodation.  | We all travellers on this planet, happy to meet you on the journey ! | Hosting since 2010 on 4 sites plus Co-hosting and currently enjoy my role as an Airbnb New Host Referral Ambassador.
+Being a 'Baby Boomer' has given me a life full of amazing experiences and being part of the Airbnb platform has proved itself as yet another adventure. I am well travelled, liberally minded, have a wonderful wife, young in heart and mind, in fine health, enjoy friendly company, a grandfather to 3 lovely boys & 2 wonderful girls."
+listings,listings.csv.gz,24491,79,host_response_time,str,8064,32.93,4,within a day | within an hour | within an hour
+listings,listings.csv.gz,24491,79,host_response_rate,str,8064,32.93,65,78% | 100% | 100%
+listings,listings.csv.gz,24491,79,host_acceptance_rate,str,6745,27.54,99,87% | 99% | 0%
+listings,listings.csv.gz,24491,79,host_is_superhost,str,856,3.5,2,f | f | f
+listings,listings.csv.gz,24491,79,host_thumbnail_url,str,6,0.02,13242,https://a0.muscache.com/im/pictures/user/6860cd4a-20cd-47b6-9482-08ffff01a537.jpg?aki_policy=profile_small | https://a0.muscache.com/im/pictures/user/3894abfe-cde6-40f8-9579-124e7cde62e3.jpg?aki_policy=profile_small | https://a0.muscache.com/im/pictures/user/User-182833/original/ec7b2567-7ab1-4db3-a697-cfd0bc66db92.jpeg?aki_policy=profile_small
+listings,listings.csv.gz,24491,79,host_picture_url,str,6,0.02,13242,https://a0.muscache.com/im/pictures/user/6860cd4a-20cd-47b6-9482-08ffff01a537.jpg?aki_policy=profile_x_medium | https://a0.muscache.com/im/pictures/user/3894abfe-cde6-40f8-9579-124e7cde62e3.jpg?aki_policy=profile_x_medium | https://a0.muscache.com/im/pictures/user/User-182833/original/ec7b2567-7ab1-4db3-a697-cfd0bc66db92.jpeg?aki_policy=profile_x_medium
+listings,listings.csv.gz,24491,79,host_neighbourhood,str,17224,70.33,112,Brunswick | St Kilda | South Melbourne
+listings,listings.csv.gz,24491,79,host_listings_count,float64,6,0.02,101,1.0 | 10.0 | 3.0
+listings,listings.csv.gz,24491,79,host_total_listings_count,float64,6,0.02,144,1.0 | 20.0 | 3.0
+listings,listings.csv.gz,24491,79,host_verifications,str,6,0.02,7,"['email', 'phone'] | ['email', 'phone', 'work_email'] | ['email', 'phone', 'work_email']"
+listings,listings.csv.gz,24491,79,host_has_profile_pic,str,6,0.02,2,t | t | t
+listings,listings.csv.gz,24491,79,host_identity_verified,str,6,0.02,2,t | t | t
+listings,listings.csv.gz,24491,79,neighbourhood,str,13030,53.2,1,Neighborhood highlights | Neighborhood highlights | Neighborhood highlights
+listings,listings.csv.gz,24491,79,neighbourhood_cleansed,str,0,0.0,30,Moreland | Port Phillip | Darebin
+listings,listings.csv.gz,24491,79,neighbourhood_group_cleansed,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,latitude,float64,0,0.0,18059,-37.76606 | -37.85999 | -37.69761
+listings,listings.csv.gz,24491,79,longitude,float64,0,0.0,18545,144.97951 | 144.97662 | 145.00066
+listings,listings.csv.gz,24491,79,property_type,str,0,0.0,81,Private room in rental unit | Entire rental unit | Private room in home
+listings,listings.csv.gz,24491,79,room_type,str,0,0.0,4,Private room | Entire home/apt | Private room
+listings,listings.csv.gz,24491,79,accommodates,int64,0,0.0,16,2 | 2 | 2
+listings,listings.csv.gz,24491,79,bathrooms,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,bathrooms_text,str,18,0.07,39,1 shared bath | 1 bath | 1 shared bath
+listings,listings.csv.gz,24491,79,bedrooms,float64,5778,23.59,13,1.0 | 1.0 | 1.0
+listings,listings.csv.gz,24491,79,beds,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,amenities,str,0,0.0,23265,"[""Other gas stove"", ""Ethernet connection"", ""Rice maker"", ""Fire extinguisher"", ""BBQ grill: gas"", ""Bed linens"", ""Kitchen"", ""Wine glasses"", ""Drying rack for clothing"", ""Dining table"", ""Self check-in"", ""Hair dryer"", ""Baking sheet"", ""27 inch HDTV"", ""Luggage dropoff allowed"", ""Carbon monoxide alarm"", ""Iron"", ""Dishes and silverware"", ""Extra pillows and blankets"", ""Cooking basics"", ""Clothing storage: wardrobe"", ""Blender"", ""Microwave"", ""Room-darkening shades"", ""Essentials"", ""Conditioner"", ""Dedicated workspace"", ""Outdoor furniture"", ""Refrigerator"", ""Free washer \u2013 In unit"", ""Wifi \u2013 13 Mbps"", ""Freezer"", ""Shared backyard \u2013 Fully fenced"", ""Portable fans"", ""Hot water kettle"", ""Portable air conditioning"", ""Smoke alarm"", ""Chef oven"", ""Toaster"", ""Shampoo"", ""Radiant heating"", ""Shower gel"", ""Keypad"", ""Barbecue utensils"", ""Bathtub"", ""Cleaning products"", ""Exterior security cameras on property"", ""Outdoor dining area"", ""Hangers"", ""Lock on bedroom door"", ""Body soap"", ""Hot water"", ""First aid kit""] | [""Lockbox"", ""Dryer"", ""Air conditioning"", ""Fire extinguisher"", ""Oven"", ""Washer"", ""Dishwasher"", ""Bed linens"", ""Kitchen"", ""Self check-in"", ""Hair dryer"", ""Iron"", ""Dishes and silverware"", ""Extra pillows and blankets"", ""Heating"", ""Cooking basics"", ""Stove"", ""Microwave"", ""Essentials"", ""Refrigerator"", ""Patio or balcony"", ""TV"", ""Smoke alarm"", ""Shampoo"", ""Wifi"", ""Hangers"", ""Hot water"", ""First aid kit""] | [""Essentials"", ""Free parking on premises"", ""Smoking allowed"", ""Hair dryer"", ""Air conditioning"", ""Wifi"", ""Washer"", ""TV"", ""Host greets you"", ""Smoke alarm"", ""Hangers"", ""Heating"", ""Kitchen"", ""Shampoo""]"
+listings,listings.csv.gz,24491,79,price,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,minimum_nights,int64,0,0.0,86,5 | 3 | 7
+listings,listings.csv.gz,24491,79,maximum_nights,int64,0,0.0,199,28 | 14 | 365
+listings,listings.csv.gz,24491,79,minimum_minimum_nights,float64,9,0.04,85,5.0 | 3.0 | 7.0
+listings,listings.csv.gz,24491,79,maximum_minimum_nights,float64,9,0.04,94,5.0 | 3.0 | 7.0
+listings,listings.csv.gz,24491,79,minimum_maximum_nights,float64,9,0.04,186,28.0 | 14.0 | 1125.0
+listings,listings.csv.gz,24491,79,maximum_maximum_nights,float64,9,0.04,186,28.0 | 14.0 | 1125.0
+listings,listings.csv.gz,24491,79,minimum_nights_avg_ntm,float64,0,0.0,334,5.0 | 3.0 | 7.0
+listings,listings.csv.gz,24491,79,maximum_nights_avg_ntm,float64,0,0.0,594,28.0 | 14.0 | 1125.0
+listings,listings.csv.gz,24491,79,calendar_updated,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,has_availability,str,913,3.73,1,t | t | t
+listings,listings.csv.gz,24491,79,availability_30,int64,0,0.0,31,0 | 0 | 0
+listings,listings.csv.gz,24491,79,availability_60,int64,0,0.0,61,1 | 0 | 0
+listings,listings.csv.gz,24491,79,availability_90,int64,0,0.0,91,12 | 0 | 0
+listings,listings.csv.gz,24491,79,availability_365,int64,0,0.0,366,83 | 0 | 0
+listings,listings.csv.gz,24491,79,calendar_last_scraped,str,0,0.0,1,2025-09-12 | 2025-09-12 | 2025-09-12
+listings,listings.csv.gz,24491,79,number_of_reviews,int64,0,0.0,506,204 | 42 | 157
+listings,listings.csv.gz,24491,79,number_of_reviews_ltm,int64,0,0.0,136,12 | 0 | 0
+listings,listings.csv.gz,24491,79,number_of_reviews_l30d,int64,0,0.0,23,0 | 0 | 0
+listings,listings.csv.gz,24491,79,availability_eoy,int64,0,0.0,112,19 | 0 | 0
+listings,listings.csv.gz,24491,79,number_of_reviews_ly,int64,0,0.0,138,18 | 0 | 0
+listings,listings.csv.gz,24491,79,estimated_occupancy_l365d,int64,0,0.0,91,120 | 0 | 0
+listings,listings.csv.gz,24491,79,estimated_revenue_l365d,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,first_review,str,4182,17.08,3658,2013-01-12 | 2010-08-04 | 2010-11-16
+listings,listings.csv.gz,24491,79,last_review,str,4182,17.08,2432,2025-04-23 | 2020-03-15 | 2018-08-22
+listings,listings.csv.gz,24491,79,review_scores_rating,float64,4182,17.08,150,4.57 | 4.68 | 4.71
+listings,listings.csv.gz,24491,79,review_scores_accuracy,float64,4186,17.09,147,4.69 | 4.78 | 4.68
+listings,listings.csv.gz,24491,79,review_scores_cleanliness,float64,4183,17.08,172,4.08 | 4.71 | 4.65
+listings,listings.csv.gz,24491,79,review_scores_checkin,float64,4189,17.1,154,4.77 | 4.83 | 4.89
+listings,listings.csv.gz,24491,79,review_scores_communication,float64,4186,17.09,144,4.74 | 4.83 | 4.83
+listings,listings.csv.gz,24491,79,review_scores_location,float64,4189,17.1,115,4.71 | 4.78 | 4.39
+listings,listings.csv.gz,24491,79,review_scores_value,float64,4189,17.1,155,4.66 | 4.66 | 4.69
+listings,listings.csv.gz,24491,79,license,float64,24491,100.0,0,
+listings,listings.csv.gz,24491,79,instant_bookable,str,0,0.0,2,f | f | f
+listings,listings.csv.gz,24491,79,calculated_host_listings_count,int64,0,0.0,64,1 | 10 | 2
+listings,listings.csv.gz,24491,79,calculated_host_listings_count_entire_homes,int64,0,0.0,65,0 | 10 | 0
+listings,listings.csv.gz,24491,79,calculated_host_listings_count_private_rooms,int64,0,0.0,24,1 | 0 | 2
+listings,listings.csv.gz,24491,79,calculated_host_listings_count_shared_rooms,int64,0,0.0,12,0 | 0 | 0
+listings,listings.csv.gz,24491,79,reviews_per_month,float64,4182,17.08,820,1.32 | 0.23 | 0.87
+calendar,calendar.csv.gz,8939215,7,listing_id,int64,0,0.0,24491,2033648 | 2033648 | 2033648
+calendar,calendar.csv.gz,8939215,7,date,str,0,0.0,365,2025-09-12 | 2025-09-13 | 2025-09-14
+calendar,calendar.csv.gz,8939215,7,available,str,0,0.0,2,f | f | f
+calendar,calendar.csv.gz,8939215,7,price,float64,8939215,100.0,0,
+calendar,calendar.csv.gz,8939215,7,adjusted_price,float64,8939215,100.0,0,
+calendar,calendar.csv.gz,8939215,7,minimum_nights,int64,0,0.0,101,5 | 5 | 5
+calendar,calendar.csv.gz,8939215,7,maximum_nights,int64,0,0.0,404,150 | 150 | 150
+reviews,reviews.csv.gz,943744,6,listing_id,int64,0,0.0,20309,10803 | 10803 | 10803
+reviews,reviews.csv.gz,943744,6,id,int64,0,0.0,943744,3333588 | 3369053 | 3403930
+reviews,reviews.csv.gz,943744,6,date,str,0,0.0,4912,2013-01-12 | 2013-01-18 | 2013-01-23
+reviews,reviews.csv.gz,943744,6,reviewer_id,int64,0,0.0,734267,4421189 | 1763045 | 4423532
+reviews,reviews.csv.gz,943744,6,reviewer_name,str,1,0.0,110541,Johannes | Julie | Ivonne
+reviews,reviews.csv.gz,943744,6,comments,str,127,0.01,901296,"It was very convenient  to stay in Lindsay's appartment in Brunswick for a couple of weeks, not only is Lindsay a great host giving you valuable tips the appartment also is in a very interesting part of Melbourne and the CBD is not far away. Highly recommended! | Perfect isnt enough! Lindsay was the best host we could ever imagine help us a lot to handle our new start in australia. His place have a perfect location few second to the tram and 10 minute to cbd , close to a lot of restaurant and 2 park. The room is pretty big and really sunny , we very felt like home during the two time we were there. Thanks again lindsay wish you all the best.<br/>julie and pierre | Living with Lindsay was very relaxed. The room is choosen in fantastic colours and the colours of the sheets fits very cool together with it too. Lindsay is a very helpfull person and he helped me a lot organisating my journey! "
+neighbourhoods,neighbourhoods.csv,30,2,neighbourhood_group,float64,30,100.0,0,
+neighbourhoods,neighbourhoods.csv,30,2,neighbourhood,str,0,0.0,30,Banyule | Bayside | Boroondara
