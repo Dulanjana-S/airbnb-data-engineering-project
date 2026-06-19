@@ -35,6 +35,11 @@ temp/
 
 # Keep report outputs for reviewer evidence
 !reports/
+!reports/final_report.md
+!reports/final_report.pdf
+!reports/decision_log.md
+!reports/ai_usage_disclosure.md
+!reports/report_insights.md
 !reports/eda_outputs/
 !reports/figures/
 !reports/sql_outputs/
