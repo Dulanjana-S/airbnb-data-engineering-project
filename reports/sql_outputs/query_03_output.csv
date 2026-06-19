@@ -1,1 +1,11 @@
-neighbourhood_cleansed,listing_count,total_estimated_revenue,average_occupancy_rate
+neighbourhood_cleansed,listing_count,average_occupancy_rate_estimate,average_availability_365,average_number_of_reviews
+Darebin,584,0.7066,106.91,27.6
+Yarra,1771,0.6918,112.48,44.83
+Moreland,946,0.6836,114.89,29.79
+Stonnington,1380,0.6623,123.04,31.37
+Port Phillip,2687,0.6499,127.79,33.57
+Boroondara,593,0.6314,134.53,24.26
+Melbourne,7832,0.616,140.12,49.14
+Glen Eira,527,0.6018,145.33,22.52
+Bayside,421,0.5871,150.72,22.24
+Maribyrnong,622,0.5818,152.66,32.69

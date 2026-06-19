@@ -1,4 +1,4 @@
-host_is_superhost,listing_count,average_review_score,median_review_score
-True,6781,4.87,4.9
-,793,4.72,4.8
-False,12735,4.66,4.79
+host_is_superhost,listing_count,average_review_score,median_review_score,average_number_of_reviews
+True,6781,4.87,4.9,78.59
+,793,4.72,4.8,38.6
+False,12735,4.66,4.79,29.86
