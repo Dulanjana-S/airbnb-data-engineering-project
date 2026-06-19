@@ -1,0 +1,35 @@
+# Airbnb data engineering project
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Generated data and database files
+data/processed/
+data/database/
+
+# Generated analysis outputs
+reports/eda_outputs/
+reports/figures/
+reports/sql_outputs/
+reports/statistical_outputs/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
