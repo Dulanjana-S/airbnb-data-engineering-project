@@ -1,35 +1,26 @@
-# Airbnb data engineering project
-
-# Python bytecode and caches
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-
-# Virtual environments
+# Python environment
 venv/
-.venv/
-env/
+__pycache__/
+*.pyc
 
-# Notebook checkpoints
-.ipynb_checkpoints/
+# Raw dataset files are excluded because they can be large
+data/raw/
 
-# Generated data and database files
+# Generated processed data and database can be recreated by running the pipeline
 data/processed/
 data/database/
 
-# Generated analysis outputs
-reports/eda_outputs/
-reports/figures/
-reports/sql_outputs/
-reports/statistical_outputs/
+# Keep report outputs for reviewer evidence
+!reports/
+!reports/eda_outputs/
+!reports/figures/
+!reports/sql_outputs/
+!reports/statistical_outputs/
+!reports/**/*.csv
+!reports/**/*.png
+!reports/**/*.md
+!reports/**/*.pdf
 
-# Editor and OS files
-.vscode/
+# System files
 .DS_Store
 Thumbs.db
