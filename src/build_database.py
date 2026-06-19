@@ -109,6 +109,7 @@ def build_database():
             host_id,
             neighbourhood_cleansed,
             room_type,
+            analysis_price,
             property_type,
             accommodates,
             bedrooms,

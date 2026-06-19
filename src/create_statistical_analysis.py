@@ -64,10 +64,10 @@ def mann_whitney_test(group_a, group_b):
     return statistic, p_value, effect_size, len(group_a), len(group_b)
 
 
-def test_entire_home_vs_private_room(listing_master):
-    hypothesis = "H1: Entire-home listings have different prices than private rooms"
+def test_entire_home_vs_private_room_availability(listing_master):
+    hypothesis = "H1: Entire-home listings have different annual availability than private rooms"
 
-    required_columns = {"room_type", "analysis_price"}
+    required_columns = {"room_type", "availability_365"}
     if not required_columns.issubset(listing_master.columns):
         return create_skipped_result(
             hypothesis,
@@ -78,12 +78,12 @@ def test_entire_home_vs_private_room(listing_master):
 
     entire_home = listing_master.loc[
         room_type_normalised.str.contains("entire home", na=False),
-        "analysis_price",
+        "availability_365",
     ]
 
     private_room = listing_master.loc[
         room_type_normalised.str.contains("private room", na=False),
-        "analysis_price",
+        "availability_365",
     ]
 
     result = mann_whitney_test(entire_home, private_room)
@@ -91,7 +91,7 @@ def test_entire_home_vs_private_room(listing_master):
     if result is None:
         return create_skipped_result(
             hypothesis,
-            "The test was skipped because one or both room-type groups had fewer than two valid price records.",
+            "The test was skipped because one or both room-type groups had fewer than two valid availability records.",
         )
 
     statistic, p_value, effect_size, n1, n2 = result
@@ -100,18 +100,18 @@ def test_entire_home_vs_private_room(listing_master):
         "hypothesis": hypothesis,
         "test_used": "Mann-Whitney U test",
         "status": "Completed",
-        "null_hypothesis": "There is no price distribution difference between entire-home listings and private rooms.",
-        "alternative_hypothesis": "There is a price distribution difference between entire-home listings and private rooms.",
+        "null_hypothesis": "There is no annual availability distribution difference between entire-home listings and private rooms.",
+        "alternative_hypothesis": "There is an annual availability distribution difference between entire-home listings and private rooms.",
         "sample_size_group_1": n1,
         "sample_size_group_2": n2,
         "test_statistic": round(statistic, 4),
         "p_value": round(p_value, 6),
         "effect_size": effect_size,
-        "business_interpretation": "Room type is tested as a pricing driver. If significant, entire homes and private rooms should be benchmarked separately.",
+        "business_interpretation": "This tests whether different accommodation types behave differently in terms of yearly availability. A significant result suggests supply strategy differs by room type.",
     }
 
 
-def test_superhost_vs_non_superhost(listing_master):
+def test_superhost_vs_non_superhost_review_scores(listing_master):
     hypothesis = "H2: Superhost listings have different review scores than non-superhost listings"
 
     required_columns = {"host_is_superhost", "review_scores_rating"}
@@ -154,14 +154,14 @@ def test_superhost_vs_non_superhost(listing_master):
         "test_statistic": round(statistic, 4),
         "p_value": round(p_value, 6),
         "effect_size": effect_size,
-        "business_interpretation": "Superhost status is tested as a quality signal. If significant, it may indicate stronger guest satisfaction among superhost listings.",
+        "business_interpretation": "This tests whether superhost status is associated with guest satisfaction. A significant result suggests superhost status may be a useful quality signal.",
     }
 
 
-def test_neighbourhood_price_differences(listing_master):
-    hypothesis = "H3: Listing prices differ across neighbourhoods"
+def test_neighbourhood_availability_differences(listing_master):
+    hypothesis = "H3: Annual availability differs across neighbourhoods"
 
-    required_columns = {"neighbourhood_cleansed", "analysis_price"}
+    required_columns = {"neighbourhood_cleansed", "availability_365"}
     if not required_columns.issubset(listing_master.columns):
         return create_skipped_result(
             hypothesis,
@@ -169,29 +169,25 @@ def test_neighbourhood_price_differences(listing_master):
         )
 
     filtered_data = listing_master.dropna(
-        subset=["neighbourhood_cleansed", "analysis_price"]
+        subset=["neighbourhood_cleansed", "availability_365"]
     ).copy()
 
-    filtered_data = filtered_data[
-        ~filtered_data["neighbourhood_cleansed"].astype(str).str.lower().isin(["nan", "none", ""])
-    ]
-
     neighbourhood_counts = filtered_data["neighbourhood_cleansed"].value_counts()
-    eligible_neighbourhoods = neighbourhood_counts[neighbourhood_counts >= 10].index
+    eligible_neighbourhoods = neighbourhood_counts[neighbourhood_counts >= 30].index
 
     neighbourhood_groups = []
 
     for _, group in filtered_data[
         filtered_data["neighbourhood_cleansed"].isin(eligible_neighbourhoods)
     ].groupby("neighbourhood_cleansed"):
-        prices = group["analysis_price"].dropna()
-        if len(prices) >= 10:
-            neighbourhood_groups.append(prices)
+        values = group["availability_365"].dropna()
+        if len(values) >= 30:
+            neighbourhood_groups.append(values)
 
     if len(neighbourhood_groups) < 2:
         return create_skipped_result(
             hypothesis,
-            "The test was skipped because fewer than two neighbourhoods had enough valid price records.",
+            "The test was skipped because fewer than two neighbourhoods had enough valid availability records.",
         )
 
     statistic, p_value = stats.kruskal(*neighbourhood_groups)
@@ -204,21 +200,21 @@ def test_neighbourhood_price_differences(listing_master):
         "hypothesis": hypothesis,
         "test_used": "Kruskal-Wallis test",
         "status": "Completed",
-        "null_hypothesis": "Neighbourhood price distributions are the same.",
-        "alternative_hypothesis": "At least one neighbourhood has a different price distribution.",
+        "null_hypothesis": "Annual availability distributions are the same across neighbourhoods.",
+        "alternative_hypothesis": "At least one neighbourhood has a different annual availability distribution.",
         "sample_size_group_1": n,
         "sample_size_group_2": k,
         "test_statistic": round(statistic, 4),
         "p_value": round(p_value, 6),
         "effect_size": effect_size,
-        "business_interpretation": "Neighbourhood is tested as a location-based pricing driver. If significant, pricing should be analysed at neighbourhood level rather than only city level.",
+        "business_interpretation": "This tests whether supply availability patterns differ by location. A significant result suggests neighbourhood-level market monitoring is needed.",
     }
 
 
-def test_weekend_vs_weekday_prices(calendar):
-    hypothesis = "H4: Weekend calendar prices differ from weekday prices"
+def test_weekend_vs_weekday_availability(calendar):
+    hypothesis = "H4: Weekend availability differs from weekday availability"
 
-    required_columns = {"is_weekend", "analysis_price"}
+    required_columns = {"is_weekend", "available_bool"}
     if not required_columns.issubset(calendar.columns):
         return create_skipped_result(
             hypothesis,
@@ -226,23 +222,26 @@ def test_weekend_vs_weekday_prices(calendar):
         )
 
     weekend_flag = calendar["is_weekend"].astype(str).str.lower().str.strip()
+    available_numeric = calendar["available_bool"].astype(str).str.lower().map(
+        {
+            "true": 1,
+            "false": 0,
+            "1": 1,
+            "0": 0,
+            "t": 1,
+            "f": 0,
+        }
+    )
 
-    weekend_prices = calendar.loc[
-        weekend_flag.isin(["true", "1", "yes"]),
-        "analysis_price",
-    ]
+    weekend_values = available_numeric[weekend_flag.isin(["true", "1", "yes"])]
+    weekday_values = available_numeric[weekend_flag.isin(["false", "0", "no"])]
 
-    weekday_prices = calendar.loc[
-        weekend_flag.isin(["false", "0", "no"]),
-        "analysis_price",
-    ]
-
-    result = mann_whitney_test(weekend_prices, weekday_prices)
+    result = mann_whitney_test(weekend_values, weekday_values)
 
     if result is None:
         return create_skipped_result(
             hypothesis,
-            "The test was skipped because weekend or weekday records had insufficient valid price values.",
+            "The test was skipped because weekend or weekday records had insufficient valid availability values.",
         )
 
     statistic, p_value, effect_size, n1, n2 = result
@@ -251,14 +250,14 @@ def test_weekend_vs_weekday_prices(calendar):
         "hypothesis": hypothesis,
         "test_used": "Mann-Whitney U test",
         "status": "Completed",
-        "null_hypothesis": "Weekend and weekday price distributions are the same.",
-        "alternative_hypothesis": "Weekend and weekday price distributions are different.",
+        "null_hypothesis": "Weekend and weekday availability distributions are the same.",
+        "alternative_hypothesis": "Weekend and weekday availability distributions are different.",
         "sample_size_group_1": n1,
         "sample_size_group_2": n2,
         "test_statistic": round(statistic, 4),
         "p_value": round(p_value, 6),
         "effect_size": effect_size,
-        "business_interpretation": "Day-of-week pricing is tested. If significant, hosts may be applying weekend pricing strategies.",
+        "business_interpretation": "This tests whether availability patterns differ between weekends and weekdays. A significant result may indicate seasonal or demand-driven booking behaviour.",
     }
 
 
@@ -274,22 +273,20 @@ def main():
     listing_master = pd.read_csv(PROCESSED_DIR / "listing_master.csv", low_memory=False)
     calendar = pd.read_csv(PROCESSED_DIR / "clean_calendar.csv", low_memory=False)
 
-    if "analysis_price" in listing_master.columns:
-        listing_master["analysis_price"] = to_numeric(listing_master["analysis_price"])
-
-    if "review_scores_rating" in listing_master.columns:
-        listing_master["review_scores_rating"] = to_numeric(
-            listing_master["review_scores_rating"]
-        )
-
-    if "analysis_price" in calendar.columns:
-        calendar["price_clean"] = to_numeric(calendar["price_clean"])
+    for column in [
+        "availability_365",
+        "review_scores_rating",
+        "number_of_reviews",
+        "reviews_per_month",
+    ]:
+        if column in listing_master.columns:
+            listing_master[column] = to_numeric(listing_master[column])
 
     results = [
-        test_entire_home_vs_private_room(listing_master),
-        test_superhost_vs_non_superhost(listing_master),
-        test_neighbourhood_price_differences(listing_master),
-        test_weekend_vs_weekday_prices(calendar),
+        test_entire_home_vs_private_room_availability(listing_master),
+        test_superhost_vs_non_superhost_review_scores(listing_master),
+        test_neighbourhood_availability_differences(listing_master),
+        test_weekend_vs_weekday_availability(calendar),
     ]
 
     save_results(results)
