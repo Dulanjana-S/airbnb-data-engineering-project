@@ -52,3 +52,8 @@ temp/
 # System files
 .DS_Store
 Thumbs.db
+
+!reports/ml_outputs/
+!reports/ai_outputs/
+!reports/ml_outputs/**/*.csv
+!reports/ai_outputs/**/*.csv
