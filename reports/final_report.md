@@ -2,33 +2,35 @@
 
 ## Table of Contents
 
-1. Executive Summary  
-2. Objectives and Scope  
-3. Dataset Overview  
-4. Methodology  
-5. Engineering Approach  
-6. Data Quality Findings  
-7. SQL Analysis Findings  
-8. Exploratory Data Analysis Findings  
-9. Statistical Findings  
-10. Business Recommendations  
-11. Assumptions and Decision Log  
-12. Limitations and Caveats  
-13. Future Improvements  
-14. Reflection  
-Appendix A. AI Usage Disclosure  
-Appendix B. Figure Gallery  
-Appendix C. SQL Output Tables  
-Appendix D. EDA Output Tables  
-Appendix E. Statistical Output Tables  
+1. Executive Summary
+2. Objectives and Scope
+3. Dataset Overview
+4. Methodology
+5. Engineering Approach
+6. Data Quality Findings
+7. SQL Analysis Findings
+8. Exploratory Data Analysis Findings
+9. Statistical Findings
+10. Data Science & ML Experiment
+11. AI/ML Experiment
+12. Business Recommendations
+13. Assumptions and Decision Log
+14. Limitations and Caveats
+15. Future Improvements
+16. Reflection
+    Appendix A. AI Usage Disclosure
+    Appendix B. Figure Gallery
+    Appendix C. SQL Output Tables
+    Appendix D. EDA Output Tables
+    Appendix E. Statistical Output Tables
 
 ## 1. Executive Summary
 
 This project analyses the Melbourne, Victoria, Australia Airbnb market using public data from Inside Airbnb.
 
-The objective was to build a reproducible data engineering and analytics workflow that transforms raw Airbnb files into cleaned, profiled, and analytics-ready outputs. The project includes dataset familiarisation, data profiling, cleaning, an enriched listing master table, an analytical DuckDB database, SQL analysis, exploratory data analysis, and statistical testing.
+The objective was to build a reproducible data engineering and analytics workflow that transforms raw Airbnb files into cleaned, profiled, and analytics-ready outputs. The project includes dataset familiarisation, data profiling, cleaning, an enriched listing master table, an analytical DuckDB database, SQL analysis, exploratory data analysis, statistical testing, machine learning listing segmentation, and lightweight NLP review analysis.
 
-A key dataset limitation was identified during profiling: the Melbourne Inside Airbnb files used in this project did not contain usable price values. The `price` field in the detailed listings file, the summary listings file, and the calendar file contained no non-null values. For this reason, the final analysis focuses on supply, availability, host concentration, review behaviour, neighbourhood patterns, and quality signals rather than price or revenue.
+A key dataset limitation was identified during profiling: the Melbourne Inside Airbnb files used in this project did not contain usable price values. The `price` field in the detailed listings file, the summary listings file, and the calendar file contained no non-null values. For this reason, the final analysis focuses on supply, availability, host concentration, review behaviour, neighbourhood patterns, quality signals, listing segmentation, and review themes rather than price or revenue.
 
 Key findings include:
 
@@ -39,6 +41,8 @@ Key findings include:
 * Flexistayz is the largest host by listing count, managing 292 listings.
 * Superhost status is statistically associated with different review score distributions.
 * Availability patterns differ across room types, neighbourhoods, and weekend/weekday calendar records.
+* K-Means clustering identified four behavioural listing segments, including low-availability active supply, high-availability idle supply, established high-review listings, and low-rating low-activity listings.
+* Review NLP analysis found that guest review language is strongly positive overall, with common themes around location, cleanliness, host quality, comfort, and ease of stay.
 
 The project intentionally focuses on one city to prioritise depth, code quality, reproducibility, and clear business interpretation.
 
@@ -56,6 +60,8 @@ The main objectives of this project were to:
 * Run SQL-based business analysis.
 * Generate EDA outputs and visualisations.
 * Apply statistical testing to support analytical findings.
+* Implement an explainable ML segmentation experiment using available listing features.
+* Apply lightweight NLP analysis to guest review text.
 * Document assumptions, limitations, and technical decisions clearly.
 
 ### 2.2 Scope
@@ -72,12 +78,14 @@ The following items were intentionally not completed:
 
 * Multi-city comparison
 * Machine learning price prediction
-* LLM-based review analysis
+* Advanced transformer-based NLP modelling
+* LLM-based review analysis or RAG system
+* Production-grade model deployment
 * Cloud deployment
 * Dashboard deployment
 * Docker containerisation
 
-These items were deprioritised to focus on core data engineering, reproducibility, EDA, statistical analysis, and clear documentation.
+These items were deprioritised to focus on core data engineering, reproducibility, EDA, statistical analysis, ML segmentation, lightweight NLP review analysis, and clear documentation.
 
 ## 3. Dataset Overview
 
@@ -135,10 +143,12 @@ The final analysis therefore focuses on:
 * Host concentration
 * Neighbourhood-level supply patterns
 * Superhost quality signals
+* Listing segmentation
+* Review sentiment and review themes
 
 ## 4. Methodology
 
-The project followed a structured data engineering workflow:
+The project followed a structured data engineering and analytics workflow:
 
 1. Raw data validation
 2. Data profiling
@@ -149,7 +159,9 @@ The project followed a structured data engineering workflow:
 7. SQL analysis
 8. Exploratory data analysis
 9. Statistical testing
-10. Documentation and reporting
+10. Machine learning listing segmentation
+11. Review NLP sentiment and theme analysis
+12. Documentation and reporting
 
 The full pipeline can be executed with:
 
@@ -177,6 +189,12 @@ The pipeline runs the following scripts:
 6. `run_sql_analysis.py`
 7. `create_eda_outputs.py`
 8. `create_statistical_analysis.py`
+9. `create_ml_experiments.py`
+10. `add_segment_labels.py`
+11. `create_ai_nlp_experiments.py`
+12. `create_report_insights.py`
+
+This design keeps each stage modular while still allowing the full workflow to be regenerated with one command.
 
 ### 5.2 Data Cleaning
 
@@ -224,6 +242,21 @@ Created tables include:
 * `fact_reviews`
 
 This provides a simple analytical star-schema style model for querying listing, calendar, and review behaviour.
+
+### 5.5 ML and AI/NLP Outputs
+
+The project also generates additional outputs for the ML and AI/ML components:
+
+```text
+reports/ml_outputs/
+reports/ai_outputs/
+reports/figures/listing_segments_pca.png
+reports/figures/segment_profile_availability.png
+reports/figures/review_sentiment_distribution.png
+reports/figures/top_review_terms.png
+```
+
+These outputs extend the project beyond descriptive analysis by adding behavioural segmentation and review-text analysis.
 
 ## 6. Data Quality Findings
 
@@ -296,6 +329,10 @@ Generated figures include:
 * `reviews_by_room_type.png`
 * `monthly_availability_rate.png`
 * `top_hosts_by_listing_count.png`
+* `listing_segments_pca.png`
+* `segment_profile_availability.png`
+* `review_sentiment_distribution.png`
+* `top_review_terms.png`
 
 ### 8.1 Listing Supply by Room Type
 
@@ -415,37 +452,44 @@ Interpretation:
 
 The result suggests a statistically detectable difference between weekend and weekday availability. However, the effect size is very small, so the practical business impact may be limited. This is an example where statistical significance does not necessarily mean strong practical significance.
 
-
-## Data Science & ML Experiment: Listing Segmentation
+## 10. Data Science & ML Experiment: Listing Segmentation
 
 To extend the analysis beyond descriptive reporting, I implemented a K-Means clustering experiment to segment Melbourne Airbnb listings into behavioural supply groups. The model used listing-level features including annual availability, estimated occupancy rate, review count, reviews per month, review score, host tenure, host listing count, room type, and superhost status.
 
-The model produced four listing segments with a silhouette score of 0.3168. This indicates moderate separation between clusters, which is reasonable for real-world marketplace data where listing behaviour often overlaps rather than forming perfectly distinct groups.
+The model produced four listing segments with a silhouette score of **0.3168**. This indicates moderate separation between clusters, which is reasonable for real-world marketplace data where listing behaviour often overlaps rather than forming perfectly distinct groups.
 
 The four listing segments were:
 
-| Segment | Listing Count | Segment Name | Business Interpretation |
-|---:|---:|---|---|
-| 0 | 12,332 | Low-availability active supply | Listings with low annual availability and high occupancy proxy, suggesting stronger utilisation. |
-| 1 | 8,483 | High-availability casual or idle supply | Listings with high annual availability and lower occupancy proxy, suggesting casual, seasonal, or under-utilised supply. |
-| 2 | 2,804 | Established high-review listings | Listings with very high review counts and strong review scores, suggesting established demand signals. |
-| 3 | 872 | Low-rating low-activity listings | Listings with lower review scores, low review counts, and relatively high availability, suggesting potential quality or optimisation issues. |
+| Segment | Listing Count | Segment Name                            | Business Interpretation                                                                                                                      |
+| ------: | ------------: | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|       0 |        12,332 | Low-availability active supply          | Listings with low annual availability and high occupancy proxy, suggesting stronger utilisation.                                             |
+|       1 |         8,483 | High-availability casual or idle supply | Listings with high annual availability and lower occupancy proxy, suggesting casual, seasonal, or under-utilised supply.                     |
+|       2 |         2,804 | Established high-review listings        | Listings with very high review counts and strong review scores, suggesting established demand signals.                                       |
+|       3 |           872 | Low-rating low-activity listings        | Listings with lower review scores, low review counts, and relatively high availability, suggesting potential quality or optimisation issues. |
 
 This segmentation creates a more practical market view than analysing listings only by room type or neighbourhood. For example, platform teams could prioritise Segment 3 for quality improvement support, while revenue or market teams could study Segment 2 to understand characteristics of established high-performing listings.
 
 The experiment was intentionally framed as unsupervised segmentation rather than price prediction because the Melbourne dataset did not contain usable price values. This avoided creating unsupported predictive targets and kept the ML work aligned with validated data.
 
-## AI/ML Experiment: Review NLP Sentiment and Theme Analysis
+Key ML outputs were generated in:
+
+```text
+reports/ml_outputs/
+reports/figures/listing_segments_pca.png
+reports/figures/segment_profile_availability.png
+```
+
+## 11. AI/ML Experiment: Review NLP Sentiment and Theme Analysis
 
 To explore the unstructured review text, I implemented a lightweight NLP experiment using guest review comments. The analysis used text cleaning, lexicon-based sentiment scoring, and TF-IDF keyword extraction. This approach was selected because it is transparent, reproducible, and does not require external API keys or paid AI services.
 
 The sentiment analysis classified review language into positive, neutral, and negative categories:
 
 | Sentiment | Review Count | Review Share |
-|---|---:|---:|
-| Positive | 809,852 | 89.6% |
-| Neutral | 83,959 | 9.3% |
-| Negative | 9,590 | 1.1% |
+| --------- | -----------: | -----------: |
+| Positive  |      809,852 |        89.6% |
+| Neutral   |       83,959 |         9.3% |
+| Negative  |        9,590 |         1.1% |
 
 The results show that Melbourne Airbnb reviews are strongly skewed toward positive language. This aligns with the generally high review score distribution observed elsewhere in the project, but it also highlights a limitation: review sentiment alone may not be enough to identify listing quality issues because public review behaviour is highly positive overall.
 
@@ -455,8 +499,15 @@ From a business perspective, this NLP analysis can support host success and oper
 
 This AI/ML experiment was kept deliberately simple and explainable. A more advanced version could use transformer-based sentiment models or topic modelling, but the current approach is easier to audit and reproduce within the assessment scope.
 
+Key AI/NLP outputs were generated in:
 
-## 10. Business Recommendations
+```text
+reports/ai_outputs/
+reports/figures/review_sentiment_distribution.png
+reports/figures/top_review_terms.png
+```
+
+## 12. Business Recommendations
 
 ### Recommendation 1: Monitor Entire-Home Supply Closely
 
@@ -478,11 +529,19 @@ The largest host, Flexistayz, manages 292 listings. Host concentration analysis 
 
 The statistical analysis suggests that superhost listings have different review score distributions from non-superhost listings. This supports using superhost status as one signal of listing quality, while still considering other review and operational metrics.
 
-### Recommendation 6: Avoid Unsupported Price Conclusions
+### Recommendation 6: Use Listing Segments for Targeted Market Actions
+
+The K-Means segmentation separates listings into behavioural supply groups. Platform or market teams could use these segments to prioritise action. For example, low-rating low-activity listings may need quality improvement support, while established high-review listings can be analysed to understand strong performance patterns.
+
+### Recommendation 7: Use Review Themes to Support Host Improvement
+
+The NLP analysis shows that guests often mention location, cleanliness, host quality, comfort, and ease of stay. Host-success teams could use these themes to guide listing improvement advice and operational checklists.
+
+### Recommendation 8: Avoid Unsupported Price Conclusions
 
 Because the Melbourne dataset did not contain usable price values, price and revenue conclusions should not be made from this dataset. Future work should use a city or dataset snapshot with valid price data if pricing analysis is required.
 
-## 11. Assumptions and Decision Log
+## 13. Assumptions and Decision Log
 
 The full assumptions and decision log are documented in:
 
@@ -499,8 +558,10 @@ Major decisions include:
 * Including report outputs for reviewer evidence.
 * Pivoting away from price analysis because the Melbourne price fields were missing.
 * Using non-parametric statistical tests.
+* Using K-Means clustering for explainable unsupervised listing segmentation.
+* Using lightweight NLP instead of external LLM APIs to keep review analysis reproducible and auditable.
 
-## 12. Limitations and Caveats
+## 14. Limitations and Caveats
 
 Important limitations include:
 
@@ -510,9 +571,11 @@ Important limitations include:
 * Calendar unavailable days are only an occupancy proxy.
 * Review frequency is only a proxy for demand.
 * Statistical tests do not prove causation.
-* Machine learning and AI experiments were not completed due to prioritisation.
+* K-Means segmentation is exploratory and should not be treated as a production classification model.
+* The sentiment analysis uses a simple lexicon-based method, so it should be interpreted as a directional indicator rather than full human-level sentiment classification.
+* Advanced production-grade machine learning, transformer-based NLP, LLM applications, and model deployment were not completed due to prioritisation.
 
-## 13. Future Improvements
+## 15. Future Improvements
 
 With more time, the project could be extended by:
 
@@ -521,20 +584,24 @@ With more time, the project could be extended by:
 * Adding Docker for reproducibility.
 * Implementing dbt models and tests.
 * Adding machine learning price prediction using a dataset with valid price fields.
-* Running NLP sentiment analysis on review text.
+* Extending the current NLP sentiment analysis with topic modelling, transformer-based sentiment models, or review-quality classification.
+* Comparing K-Means segmentation with DBSCAN or hierarchical clustering.
 * Deploying the pipeline to a cloud platform.
 * Adding automated data quality tests.
 * Building a geographic map using `neighbourhoods.geojson`.
+* Adding a monitoring layer to track changes in future Inside Airbnb snapshots.
 
-## 14. Reflection
+## 16. Reflection
 
 This project was scoped to prioritise core data engineering and analytical quality.
 
-The main trade-off was choosing depth over breadth. Instead of attempting every optional section, the project focused on building a reproducible pipeline, clean outputs, SQL analysis, EDA, and statistical testing.
+The main trade-off was choosing depth over breadth. Instead of attempting every optional section superficially, the project focused on building a reproducible pipeline, clean outputs, SQL analysis, EDA, statistical testing, ML segmentation, NLP review analysis, and clear reporting.
 
-A major learning was that real-world public datasets may not support the original analytical plan. In this case, missing price data required a responsible pivot from price analysis to supply, availability, reviews, host concentration, and quality signals.
+A major learning was that real-world public datasets may not support the original analytical plan. In this case, missing price data required a responsible pivot from price analysis to supply, availability, reviews, host concentration, quality signals, segmentation, and review themes.
 
 The most important professional decision was to avoid inventing or imputing unsupported price values. This improves trust in the final analysis.
+
+The ML and AI/NLP additions were intentionally kept explainable and reproducible. This was more appropriate for the assessment than using complex methods that would be harder to validate within the project timeline.
 
 ## Appendix A. AI Usage Disclosure
 
