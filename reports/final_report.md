@@ -415,6 +415,47 @@ Interpretation:
 
 The result suggests a statistically detectable difference between weekend and weekday availability. However, the effect size is very small, so the practical business impact may be limited. This is an example where statistical significance does not necessarily mean strong practical significance.
 
+
+## Data Science & ML Experiment: Listing Segmentation
+
+To extend the analysis beyond descriptive reporting, I implemented a K-Means clustering experiment to segment Melbourne Airbnb listings into behavioural supply groups. The model used listing-level features including annual availability, estimated occupancy rate, review count, reviews per month, review score, host tenure, host listing count, room type, and superhost status.
+
+The model produced four listing segments with a silhouette score of 0.3168. This indicates moderate separation between clusters, which is reasonable for real-world marketplace data where listing behaviour often overlaps rather than forming perfectly distinct groups.
+
+The four listing segments were:
+
+| Segment | Listing Count | Segment Name | Business Interpretation |
+|---:|---:|---|---|
+| 0 | 12,332 | Low-availability active supply | Listings with low annual availability and high occupancy proxy, suggesting stronger utilisation. |
+| 1 | 8,483 | High-availability casual or idle supply | Listings with high annual availability and lower occupancy proxy, suggesting casual, seasonal, or under-utilised supply. |
+| 2 | 2,804 | Established high-review listings | Listings with very high review counts and strong review scores, suggesting established demand signals. |
+| 3 | 872 | Low-rating low-activity listings | Listings with lower review scores, low review counts, and relatively high availability, suggesting potential quality or optimisation issues. |
+
+This segmentation creates a more practical market view than analysing listings only by room type or neighbourhood. For example, platform teams could prioritise Segment 3 for quality improvement support, while revenue or market teams could study Segment 2 to understand characteristics of established high-performing listings.
+
+The experiment was intentionally framed as unsupervised segmentation rather than price prediction because the Melbourne dataset did not contain usable price values. This avoided creating unsupported predictive targets and kept the ML work aligned with validated data.
+
+## AI/ML Experiment: Review NLP Sentiment and Theme Analysis
+
+To explore the unstructured review text, I implemented a lightweight NLP experiment using guest review comments. The analysis used text cleaning, lexicon-based sentiment scoring, and TF-IDF keyword extraction. This approach was selected because it is transparent, reproducible, and does not require external API keys or paid AI services.
+
+The sentiment analysis classified review language into positive, neutral, and negative categories:
+
+| Sentiment | Review Count | Review Share |
+|---|---:|---:|
+| Positive | 809,852 | 89.6% |
+| Neutral | 83,959 | 9.3% |
+| Negative | 9,590 | 1.1% |
+
+The results show that Melbourne Airbnb reviews are strongly skewed toward positive language. This aligns with the generally high review score distribution observed elsewhere in the project, but it also highlights a limitation: review sentiment alone may not be enough to identify listing quality issues because public review behaviour is highly positive overall.
+
+The top review terms included “great”, “stay”, “place”, “location”, “apartment”, “clean”, “host”, “comfortable”, “recommend”, and “great location”. These terms suggest that guests most frequently describe the stay experience through location, cleanliness, host interaction, comfort, and ease of stay.
+
+From a business perspective, this NLP analysis can support host success and operations teams by identifying the themes guests mention most often. It also provides a foundation for future work such as topic modelling, review-quality classification, or listing improvement recommendations based on guest language.
+
+This AI/ML experiment was kept deliberately simple and explainable. A more advanced version could use transformer-based sentiment models or topic modelling, but the current approach is easier to audit and reproduce within the assessment scope.
+
+
 ## 10. Business Recommendations
 
 ### Recommendation 1: Monitor Entire-Home Supply Closely
