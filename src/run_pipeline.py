@@ -15,6 +15,10 @@ PIPELINE_STEPS = [
     "src/run_sql_analysis.py",
     "src/create_eda_outputs.py",
     "src/create_statistical_analysis.py",
+    "src/create_ml_experiments.py",
+    "src/add_segment_labels.py",
+    "src/create_ai_nlp_experiments.py",
+    "src/create_report_insights.py",
 ]
 
 logging.basicConfig(
