@@ -1,0 +1,2 @@
+model,cluster_count,silhouette_score,interpretation
+KMeans,4,0.3198,Silhouette score measures how well listings fit within their assigned segment. Higher values indicate clearer separation between segments.
